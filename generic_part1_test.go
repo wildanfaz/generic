@@ -17,21 +17,20 @@ func TestGeneric(t *testing.T) {
 	fmt.Println(Hello(v.(string)))
 
 	// generic
-
 	fmt.Println("\nType Parameter")
 	fmt.Println(Hello(v2))
 
 	fmt.Println(number)
 
 	fmt.Println("\nMultiple Parameter")
-	GenericMultipleParameter("ID :", 123)
+	GenericMultipleParameter[string, int]("ID :", 123)
 
 	GenericMultipleParameter[int, string](200, "OK")
 
 	fmt.Println("\nMultiple Type Parameter")
-	GenericMultipleTypeParameter("Hello")
+	GenericMultipleTypeParameter[string]("Hello")
 
-	GenericMultipleTypeParameter(1)
+	GenericMultipleTypeParameter[int](1)
 
 	fmt.Println("\nType Sets")
 	GenericTypeSets(123.321)
@@ -59,38 +58,37 @@ func Hello(name string) string {
 }
 
 // Generic
-
 // Type Parameter
 func GenericTypeParameter[T any](input T) T {
 	return input
 }
 
-// MultipleParameter
-func GenericMultipleParameter[T1 any, T2 any](input T1, input2 T2) {
+// Multiple Parameter
+func GenericMultipleParameter[T1, T2 any](input T1, input2 T2) {
 	fmt.Println(input, input2)
 }
 
-// MultipleTypeParameter
-func GenericMultipleTypeParameter[T1 string | int](input T1) {
+// Multiple Type Parameter
+func GenericMultipleTypeParameter[T string | int](input T) {
 	fmt.Println(input)
 }
 
-// TypeSets
 type IntOrFloat interface {
 	int | float64
 }
 
+// Type Sets
 func GenericTypeSets[T IntOrFloat](input T) {
 	fmt.Println(reflect.TypeOf(input), ":", input)
 }
 
-// Type Approximation
 type Number interface {
 	~int | int8 | float64
 }
 
 type Id int
 
+// Type Approximation
 func GenericTypeApproximation[T Number](input T) {
 	fmt.Println(input)
 }
@@ -118,7 +116,7 @@ func (v *ImplSayHello) HelloName() string {
 	return v.Name
 }
 
-// TypeInheritance
+// Type Inheritance
 func GenericTypeInheritance[T SayHello](input T) {
 	// hello := T.HelloName(input)
 
